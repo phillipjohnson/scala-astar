@@ -36,6 +36,14 @@ object MazeTest extends TestSuite {
       assert(simpleMaze.paths == paths)
     }
 
+    'ParseEntrance {
+      assert(simpleMaze.entrance == (0,1))
+    }
+
+    'ParseExit {
+      assert(simpleMaze.exit == (0,3))
+    }
+
   }
 
 }

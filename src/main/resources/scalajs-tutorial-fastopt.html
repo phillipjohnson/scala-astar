@@ -5,11 +5,15 @@
     <title>A* Maze Solver</title>
 </head>
 <body>
+<div id="canvas-container">
+    <canvas id="canvas" style="display:block"></canvas>
+</div>
+
 <!-- Include Scala.js compiled code -->
 <script type="text/javascript" src="./target/scala-2.11/a-star-maze-solver-fastopt.js"></script>
 <!-- Run tutorial.webapp.TutorialApp -->
 <script type="text/javascript">
       astar.AStarApp().main();
-    </script>
+</script>
 </body>
 </html>

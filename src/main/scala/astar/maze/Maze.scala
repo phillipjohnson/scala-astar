@@ -1,4 +1,4 @@
-package astar
+package astar.maze
 
 /**
  * Author: Phillip Johnson
@@ -16,19 +16,19 @@ class Maze(val pattern:String) {
   val width = stringRows.head.length
   val height = stringRows.size
 
-  lazy val walls:Set[(Int,Int)] = {
+  lazy val walls:Set[Cell] = {
     searchMaze(WALL_STRINGS)
   }
 
-  lazy val paths:Set[(Int,Int)] = {
+  lazy val paths:Set[Cell] = {
     searchMaze(PATH_STRINGS)
   }
 
-  lazy val entrance:(Int,Int) = {
+  lazy val entrance:(Cell) = {
     searchMaze(Set(ENTRANCE_STRING)).head
   }
 
-  lazy val exit:(Int,Int) = {
+  lazy val exit:(Cell) = {
     searchMaze(Set(EXIT_STRING)).head
   }
 
@@ -38,7 +38,7 @@ class Maze(val pattern:String) {
       (rowStr:String, row:Int) <- rows.zipWithIndex
       (char:Char, col:Int) <- rowStr.zipWithIndex
       if chars.contains(char)
-    } yield (col, row)
+    } yield new Cell(col, row)
 
     results.toSet
   }

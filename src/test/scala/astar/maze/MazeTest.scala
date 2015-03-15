@@ -1,4 +1,4 @@
-package astar
+package astar.maze
 
 import utest._
 
@@ -25,7 +25,9 @@ object MazeTest extends TestSuite {
                                              ,(4,3)
                      ,(0,4),(1,4),(2,4),(3,4),(4,4))
 
-      assert(simpleMaze.walls == walls)
+      val wallsAsCells = walls.map(point => new Cell(point._1, point._2))
+
+      assert(simpleMaze.walls == wallsAsCells)
     }
 
     'ParsePaths {
@@ -33,15 +35,17 @@ object MazeTest extends TestSuite {
                                        ,(3,2)
                      ,(0,3),(1,3),(2,3),(3,3))
 
-      assert(simpleMaze.paths == paths)
+      val pathsAsCells = paths.map(point => new Cell(point._1, point._2))
+
+      assert(simpleMaze.paths == pathsAsCells)
     }
 
     'ParseEntrance {
-      assert(simpleMaze.entrance == (0,1))
+      assert(simpleMaze.entrance == new Cell(0,1))
     }
 
     'ParseExit {
-      assert(simpleMaze.exit == (0,3))
+      assert(simpleMaze.exit == new Cell(0,3))
     }
 
   }

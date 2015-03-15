@@ -1,5 +1,6 @@
 package astar
 
+import astar.maze.Mazes
 import org.scalajs.dom.html
 
 import scala.scalajs.js
@@ -32,7 +33,7 @@ object AStarApp extends JSApp {
 
     ctx.fillStyle = "red"
     for(wall <- maze.walls) {
-      ctx.fillRect(wall._1 * zoom, wall._2 * zoom, zoom, zoom)
+      ctx.fillRect(wall.x * zoom, wall.y * zoom, zoom, zoom)
     }
 
   }

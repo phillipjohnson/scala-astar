@@ -1,4 +1,4 @@
-package astar
+package astar.maze
 
 /**
  * Author: Phillip Johnson

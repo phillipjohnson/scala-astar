@@ -6,6 +6,9 @@ package astar.maze
  */
 class Maze(val pattern:String) {
 
+  require(pattern.contains("I"))
+  require(pattern.contains("O"))
+
   private val WALL_STRINGS = Set('+','-','|')
   private val PATH_STRINGS = Set(' ','I','O')
   private val ENTRANCE_STRING = 'I'

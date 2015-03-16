@@ -1,17 +1,20 @@
-package astar.maze
+package astar.search
+
+import astar.maze.Cell
 
 /**
  * Author: Phillip Johnson
  * Date: 3/15/15
  */
-class Cell(val x:Int, val y:Int) {
+class State(cell:Cell) {
+  val x = cell.x
+  val y = cell.y
 
-  override def toString = "(" + x + ", " + y + ")"
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Cell]
+  def canEqual(other: Any): Boolean = other.isInstanceOf[State]
 
   override def equals(other: Any): Boolean = other match {
-    case that: Cell =>
+    case that: State =>
       (that canEqual this) &&
         x == that.x &&
         y == that.y

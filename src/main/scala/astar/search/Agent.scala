@@ -30,12 +30,17 @@ class Agent(maze:Maze, heuristic: (State, Maze) => Int) {
 
 
   class FringeElement(val state:State, val path:List[Cell], val cost:Int) extends Ordered[FringeElement] {
-    override def compare(that: FringeElement): Int = cost + heuristic.apply(state, maze)
+    override def compare(that: FringeElement): Int = {
+      val thisCost = this.cost + heuristic.apply(this.state, maze)
+      val thatCost = that.cost + heuristic.apply(that.state, maze)
+      thatCost.compare(thisCost)
+    }
+    override def toString = "(" + state.x + ", " + state.y + ")" + " Cells: " + path.size + " Cost: " + cost
   }
 
   def search():Option[List[Cell]] = {
     var closed:Set[State] = Set.empty
-    val fringe = new scala.collection.mutable.PriorityQueue[FringeElement]()
+    val fringe = new mutable.PriorityQueue[FringeElement]()
     fringe += new FringeElement(new State(maze.entrance), List.empty, 0)
     while(fringe.nonEmpty) {
       val next = fringe.dequeue()

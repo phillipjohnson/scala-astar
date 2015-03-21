@@ -43,8 +43,8 @@ object AStarApp extends JSApp {
     }
 
     if(solution.isDefined) {
+      dom.console.log("Nodes expanded:" + agent.searchHistory.size)
       draw(agent.searchHistory)
-//
     }
 
     def draw(fringe:Seq[List[Cell]]):Unit = {
@@ -55,7 +55,7 @@ object AStarApp extends JSApp {
           ctx.arc(cell.x * zoom + 5, cell.y * zoom + 5, (zoom -2)/ 2, 0, 2 * math.Pi)
           ctx.fill()
         }
-        dom.setTimeout(() => draw(fringe.tail), 20)
+        dom.setTimeout(() => draw(fringe.tail), 10)
       } else {
         val path = solution.get
         ctx.fillStyle = "#ffb958"

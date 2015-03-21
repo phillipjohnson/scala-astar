@@ -30,25 +30,44 @@ object AStarApp extends JSApp {
 
     val maze = Mazes.maze20
 
-    val solution:Option[List[Cell]] = new Agent(maze, Heuristics.manhattan).search()
+    val agent = new Agent(maze, Heuristics.manhattan)
+
+    val solution:Option[List[Cell]] = agent.search()
 
     canvas.height = maze.height * zoom
     canvas.width = maze.width * zoom
 
-    ctx.fillStyle = "red"
+    ctx.fillStyle = "#333333"
     for(wall <- maze.walls) {
       ctx.fillRect(wall.x * zoom, wall.y * zoom, zoom, zoom)
     }
 
     if(solution.isDefined) {
-      val path = solution.get
-      ctx.fillStyle = "blue"
-      for(cell <- path) {
-        ctx.fillRect(cell.x * zoom + 4, cell.y * zoom + 4, zoom - 8, zoom - 8)
-      }
+      draw(agent.searchHistory)
+//
     }
 
-
+    def draw(fringe:Seq[List[Cell]]):Unit = {
+      if(fringe.nonEmpty) {
+        ctx.fillStyle = "#4682b4"
+        for (cell <- fringe.head) {
+          ctx.beginPath()
+          ctx.arc(cell.x * zoom + 5, cell.y * zoom + 5, (zoom -2)/ 2, 0, 2 * math.Pi)
+          ctx.fill()
+        }
+        dom.setTimeout(() => draw(fringe.tail), 20)
+      } else {
+        val path = solution.get
+        ctx.fillStyle = "#ffb958"
+        for(cell <- path) {
+          ctx.beginPath()
+          ctx.arc(cell.x * zoom + 5, cell.y * zoom + 5, (zoom -2)/ 2, 0, 2 * math.Pi)
+          ctx.fill()
+        }
+      }
+    }
   }
+
+
 
 }

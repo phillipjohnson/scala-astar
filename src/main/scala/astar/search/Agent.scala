@@ -2,6 +2,9 @@ package astar.search
 
 import astar.maze.{Cell, Maze}
 
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
+
 /**
  * Author: Phillip Johnson
  * Date: 3/15/15
@@ -13,6 +16,7 @@ class Agent(maze:Maze, heuristic: (State, Maze) => Int) {
   val EAST = new Direction(1, 0)
   val WEST = new Direction(-1, 0)
 
+  var searchHistory = new ListBuffer[List[Cell]]
 
   class Successor(val move:Cell, val direction:Direction, val cost:Int)
 
@@ -35,13 +39,15 @@ class Agent(maze:Maze, heuristic: (State, Maze) => Int) {
     fringe += new FringeElement(new State(maze.entrance), List.empty, 0)
     while(fringe.nonEmpty) {
       val next = fringe.dequeue()
-      if(isGoal(next.state)) return Some(next.path)
+      if(isGoal(next.state)) return Some(next.path.+:(maze.entrance))
       if(!closed.contains(next.state)) {
         closed = closed + next.state
         for(s <- successors(next.state)) {
           val newPath = next.path.::(s.move)
           val newCost = next.cost + s.cost
-          fringe.enqueue(new FringeElement(new State(s.move), newPath, newCost))
+          val expansion = new FringeElement(new State(s.move), newPath, newCost)
+          searchHistory += expansion.path
+          fringe.enqueue(expansion)
         }
       }
     }

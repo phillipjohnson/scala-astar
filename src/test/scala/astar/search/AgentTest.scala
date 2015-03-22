@@ -24,6 +24,14 @@ object AgentTest extends TestSuite {
       assert(q.isDefined)
     }
 
+    'ManhattanBeatsNaive {
+      val manhattan = new Agent(Mazes.maze20, Heuristics.manhattan)
+      val naive = new Agent(Mazes.maze20, Heuristics.naive)
+      manhattan.search()
+      naive.search()
+      assert(manhattan.searchHistory.size < naive.searchHistory.size)
+    }
+
   }
 
 }

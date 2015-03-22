@@ -6,6 +6,11 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
+ * An A* Search agent.
+ *
+ * The maze is the problem to solve and the provided heuristic is used to calculate
+ * the h(x) cost of a given node.
+ *
  * Author: Phillip Johnson
  * Date: 3/15/15
  */
@@ -44,7 +49,10 @@ class Agent(maze:Maze, heuristic: (State, Maze) => Int) {
     fringe += new FringeElement(new State(maze.entrance), List.empty, 0)
     while(fringe.nonEmpty) {
       val next = fringe.dequeue()
-      if(isGoal(next.state)) return Some(next.path.+:(maze.entrance))
+      if(isGoal(next.state)) {
+        //Bookend with the entrance and exit for clarity
+        return Some(next.path.::(maze.exit).+:(maze.entrance))
+      }
       if(!closed.contains(next.state)) {
         closed = closed + next.state
         for(s <- successors(next.state)) {

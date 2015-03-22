@@ -1,8 +1,17 @@
 package astar.maze
 
 /**
+ * A problem for the A* agent to traverse.
+ *
+ * Mazes are generated from text strings using:
+ *  +- for horizontal walls
+ *  | for vertical walls
+ *  spaces for paths
+ *  I for the entrance
+ *  O for the exit
+ *
  * Author: Phillip Johnson
- * Date: 3/14/15
+ * Date: 3/14/15 (mmmm...π)
  */
 class Maze(val pattern:String) {
 

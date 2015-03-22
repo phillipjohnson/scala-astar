@@ -5,25 +5,25 @@ import astar.maze.Cell
 import astar.search.{Heuristics, Agent}
 import org.scalajs.dom.html
 
-import scala.scalajs.js
 import scala.scalajs.js.JSApp
 import org.scalajs.dom
-import dom.document
 
 import scala.scalajs.js.annotation.JSExport
 
 @JSExport
 object AStarApp extends JSApp {
 
-  private val zoom = 10
-
+  private val GREY = "#333333"
+  private val BLUE = "#4682b4"
+  private val YELLOW = "#ffb958"
+  private val zoom = 10 //px
+  private val offset = 5 //px
+  private val drawRate = 10 //milliseconds
 
   def main(): Unit = {
     val canvas = dom.document
       .getElementById("canvas")
       .asInstanceOf[html.Canvas]
-
-
 
     val ctx = canvas.getContext("2d")
       .asInstanceOf[dom.CanvasRenderingContext2D]
@@ -37,7 +37,9 @@ object AStarApp extends JSApp {
     canvas.height = maze.height * zoom
     canvas.width = maze.width * zoom
 
-    ctx.fillStyle = "#333333"
+    ctx.clearRect (0, 0, canvas.width, canvas.height)
+
+    ctx.fillStyle = GREY
     for(wall <- maze.walls) {
       ctx.fillRect(wall.x * zoom, wall.y * zoom, zoom, zoom)
     }
@@ -49,25 +51,22 @@ object AStarApp extends JSApp {
 
     def draw(fringe:Seq[List[Cell]]):Unit = {
       if(fringe.nonEmpty) {
-        ctx.fillStyle = "#4682b4"
+        ctx.fillStyle = BLUE
         for (cell <- fringe.head) {
           ctx.beginPath()
-          ctx.arc(cell.x * zoom + 5, cell.y * zoom + 5, (zoom -2)/ 2, 0, 2 * math.Pi)
+          ctx.arc(cell.x * zoom + offset, cell.y * zoom + offset, (zoom -2)/ 2, 0, 2 * math.Pi)
           ctx.fill()
         }
-        dom.setTimeout(() => draw(fringe.tail), 10)
+        dom.setTimeout(() => draw(fringe.tail), drawRate)
       } else {
         val path = solution.get
-        ctx.fillStyle = "#ffb958"
+        ctx.fillStyle = YELLOW
         for(cell <- path) {
           ctx.beginPath()
-          ctx.arc(cell.x * zoom + 5, cell.y * zoom + 5, (zoom -2)/ 2, 0, 2 * math.Pi)
+          ctx.arc(cell.x * zoom + offset, cell.y * zoom + offset, (zoom -2)/ 2, 0, 2 * math.Pi)
           ctx.fill()
         }
       }
     }
   }
-
-
-
 }

@@ -3,6 +3,8 @@ package astar.search
 import astar.maze.Maze
 
 /**
+ * Defines various heuristic functions for the A* Agent
+ *
  * Author: Phillip Johnson
  * Date: 3/15/15
  */
